@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shopify CRO Pack — 100 Códigos Liquid</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ── RESET & BASE ─────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:        #0A0A0F;
+  --bg2:       #111118;
+  --bg3:       #1A1A24;
+  --border:    rgba(255,255,255,0.08);
+  --border2:   rgba(255,255,255,0.14);
+  --text:      #F0EEF8;
+  --text2:     #9490A8;
+  --text3:     #5E5A72;
+  --accent:    #2E7CF6;
+  --accent2:   #7EB3FA;
+  --accent-bg: rgba(46,124,246,0.12);
+  --green:     #3DD68C;
+  --green-bg:  rgba(61,214,140,0.10);
+  --amber:     #F5A623;
+  --amber-bg:  rgba(245,166,35,0.10);
+  --pink:      #F06292;
+  --pink-bg:   rgba(240,98,146,0.10);
+  --mono:      'JetBrains Mono', monospace;
+  --sans:      'Inter', sans-serif;
+  --radius:    12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+}
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── SCROLLBAR ───────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg2); }
+::-webkit-scrollbar-thumb { background: var(--bg3); border-radius: 3px; }
+
+/* ── LOCK SCREEN ─────────────────────────────────────── */
+#lock-screen {
+  position: fixed; inset: 0;
+  background: var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 9999;
+  transition: opacity .4s ease;
+}
+#lock-screen.hidden { opacity: 0; pointer-events: none; }
+
+.lock-card {
+  width: min(420px, 90vw);
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 40px 36px;
+  text-align: center;
+}
+.lock-logo {
+  width: 52px; height: 52px;
+  background: var(--accent-bg);
+  border: 1px solid rgba(46,124,246,0.25);
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 24px;
+  font-size: 24px;
+}
+.lock-card h1 { font-size: 20px; font-weight: 600; margin-bottom: 6px; }
+.lock-card p { font-size: 13px; color: var(--text2); margin-bottom: 28px; }
+.lock-input-wrap { position: relative; margin-bottom: 14px; }
+.lock-input-wrap svg {
+  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+  width: 16px; height: 16px; color: var(--text3);
+}
+#pw-input {
+  width: 100%;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 15px;
+  padding: 12px 14px 12px 42px;
+  outline: none;
+  transition: border-color .15s;
+  letter-spacing: .05em;
+}
+#pw-input:focus { border-color: var(--accent); }
+#pw-error {
+  font-size: 12px; color: var(--pink);
+  min-height: 18px; margin-bottom: 14px; display: none;
+}
+#unlock-btn {
+  width: 100%;
+  background: var(--accent);
+  color: #fff;
+  border: none; border-radius: var(--radius);
+  font-family: var(--sans); font-size: 15px; font-weight: 500;
+  padding: 12px;
+  cursor: pointer;
+  transition: opacity .15s, transform .1s;
+}
+#unlock-btn:hover { opacity: .9; }
+#unlock-btn:active { transform: scale(.98); }
+
+/* ── APP ─────────────────────────────────────────────── */
+#app { display: none; min-height: 100vh; }
+#app.visible { display: block; }
+
+/* ── HEADER ──────────────────────────────────────────── */
+header {
+  border-bottom: 1px solid var(--border);
+  padding: 0 clamp(20px, 5vw, 60px);
+  position: sticky; top: 0;
+  background: rgba(10,10,15,0.85);
+  backdrop-filter: blur(14px);
+  z-index: 50;
+}
+.header-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 60px;
+}
+.header-logo {
+  display: flex; align-items: center; gap: 10px;
+  font-weight: 600; font-size: 15px;
+}
+.logo-dot {
+  width: 28px; height: 28px;
+  background: var(--accent-bg);
+  border: 1px solid rgba(46,124,246,0.3);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+}
+.header-badge {
+  font-size: 11px; font-weight: 500;
+  background: var(--accent-bg);
+  color: var(--accent2);
+  border: 1px solid rgba(46,124,246,0.2);
+  border-radius: 20px;
+  padding: 3px 10px;
+}
+
+/* ── HERO ────────────────────────────────────────────── */
+.hero {
+  max-width: 1200px; margin: 0 auto;
+  padding: 52px clamp(20px, 5vw, 60px) 40px;
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 12px; font-weight: 500; color: var(--accent2);
+  background: var(--accent-bg);
+  border: 1px solid rgba(46,124,246,0.2);
+  border-radius: 20px; padding: 4px 12px;
+  margin-bottom: 18px;
+}
+.hero-eyebrow span { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); display: inline-block; }
+.hero h1 {
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 600; line-height: 1.15;
+  letter-spacing: -.02em; margin-bottom: 14px;
+}
+.hero h1 em { font-style: normal; color: var(--accent2); }
+.hero p { font-size: 15px; color: var(--text2); max-width: 520px; margin-bottom: 32px; }
+.hero-stats {
+  display: flex; gap: 24px; flex-wrap: wrap;
+}
+.stat { display: flex; flex-direction: column; gap: 2px; }
+.stat strong { font-size: 22px; font-weight: 600; color: var(--text); }
+.stat span { font-size: 12px; color: var(--text3); }
+
+/* ── FILTERS ─────────────────────────────────────────── */
+.filters-wrap {
+  max-width: 1200px; margin: 0 auto;
+  padding: 0 clamp(20px, 5vw, 60px) 24px;
+}
+.filter-row {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 20px;
+}
+.f-btn {
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text2);
+  font-family: var(--sans); font-size: 13px;
+  cursor: pointer;
+  transition: all .15s;
+  display: flex; align-items: center; gap: 6px;
+}
+.f-btn .count {
+  font-size: 11px;
+  background: var(--bg3);
+  color: var(--text3);
+  border-radius: 10px;
+  padding: 1px 6px;
+}
+.f-btn:hover { border-color: var(--border2); color: var(--text); }
+.f-btn.active {
+  border-color: rgba(46,124,246,0.4);
+  background: var(--accent-bg);
+  color: var(--accent2);
+}
+.f-btn.active .count { background: rgba(46,124,246,0.15); color: var(--accent2); }
+
+/* ── SEARCH ──────────────────────────────────────────── */
+.search-wrap {
+  max-width: 1200px; margin: 0 auto;
+  padding: 20px clamp(20px, 5vw, 60px) 0;
+  position: relative;
+}
+.search-wrap svg {
+  position: absolute; left: calc(clamp(20px,5vw,60px) + 14px);
+  top: 50%; transform: translateY(-50%);
+  width: 16px; height: 16px; color: var(--text3);
+}
+#search-input {
+  width: 100%; max-width: 400px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-family: var(--sans); font-size: 14px;
+  padding: 10px 14px 10px 40px;
+  outline: none;
+  transition: border-color .15s;
+}
+#search-input::placeholder { color: var(--text3); }
+#search-input:focus { border-color: var(--border2); }
+
+/* ── GRID ────────────────────────────────────────────── */
+.grid-wrap {
+  max-width: 1200px; margin: 0 auto;
+  padding: 24px clamp(20px, 5vw, 60px) 60px;
+}
+.codes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+/* ── CARD ────────────────────────────────────────────── */
+.code-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color .2s, transform .2s;
+  display: flex; flex-direction: column;
+}
+.code-card:hover {
+  border-color: var(--border2);
+  transform: translateY(-3px);
+}
+.card-thumb {
+  height: 140px;
+  background: var(--bg3);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+  border-bottom: 1px solid var(--border);
+}
+.card-thumb img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .3s ease;
+}
+.code-card:hover .card-thumb img { transform: scale(1.03); }
+.card-thumb-placeholder {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 36px;
+  background: linear-gradient(135deg, var(--bg3) 0%, rgba(46,124,246,0.07) 100%);
+}
+.card-chip {
+  position: absolute; top: 10px; right: 10px;
+  font-size: 10px; font-weight: 500; padding: 3px 8px;
+  border-radius: 20px; text-transform: uppercase; letter-spacing: .04em;
+}
+.chip-popular  { background: var(--amber-bg);  color: var(--amber);  border: 1px solid rgba(245,166,35,.2); }
+.chip-nuevo    { background: var(--green-bg);   color: var(--green);  border: 1px solid rgba(61,214,140,.2); }
+.chip-avanzado { background: var(--pink-bg);    color: var(--pink);   border: 1px solid rgba(240,98,146,.2); }
+.card-body { padding: 14px 16px; flex: 1; display: flex; flex-direction: column; gap: 6px; }
+.card-body h3 { font-size: 13px; font-weight: 500; color: var(--text); line-height: 1.4; }
+.card-body p  { font-size: 11px; color: var(--text2); line-height: 1.5; flex: 1; }
+.card-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: 8px;
+}
+.card-tag {
+  font-size: 10px; padding: 2px 8px;
+  border-radius: 10px;
+  background: var(--bg3);
+  color: var(--text3);
+  border: 1px solid var(--border);
+}
+.card-arrow {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--bg3);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text3); font-size: 13px;
+  transition: background .15s, color .15s;
+}
+.code-card:hover .card-arrow { background: var(--accent-bg); color: var(--accent2); }
+
+/* ── EMPTY / LOADING STATE ───────────────────────────── */
+.state-box {
+  text-align: center; padding: 60px 20px;
+  color: var(--text2); display: none;
+}
+.state-box.visible { display: block; }
+.state-icon { font-size: 40px; margin-bottom: 14px; }
+.state-box h3 { font-size: 16px; font-weight: 500; margin-bottom: 6px; color: var(--text); }
+.state-box p  { font-size: 13px; }
+.spinner {
+  width: 32px; height: 32px;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+  margin: 0 auto 16px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── MODAL ───────────────────────────────────────────── */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.7);
+  backdrop-filter: blur(6px);
+  z-index: 200;
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  opacity: 0; pointer-events: none;
+  transition: opacity .25s;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+
+.modal {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-xl);
+  width: min(760px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  transform: translateY(12px) scale(.98);
+  transition: transform .25s;
+}
+.modal-overlay.open .modal { transform: none; }
+
+.modal-header {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  padding: 24px 28px 20px;
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0;
+  background: var(--bg2); z-index: 1;
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+}
+.modal-header h2 { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+.modal-header p  { font-size: 13px; color: var(--text2); }
+.close-btn {
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg3);
+  color: var(--text2);
+  cursor: pointer; font-size: 18px; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-left: 16px;
+  transition: background .15s, color .15s;
+}
+.close-btn:hover { background: var(--bg3); color: var(--text); border-color: var(--border2); }
+
+.modal-body { padding: 24px 28px; display: flex; flex-direction: column; gap: 24px; }
+
+/* preview device tabs */
+.device-tabs {
+  display: flex; gap: 0;
+  background: var(--bg3);
+  border-radius: var(--radius);
+  padding: 3px;
+  width: fit-content;
+}
+.dev-btn {
+  padding: 7px 16px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: var(--text2);
+  font-family: var(--sans); font-size: 13px;
+  cursor: pointer;
+  transition: all .15s;
+  display: flex; align-items: center; gap: 6px;
+}
+.dev-btn.active { background: var(--bg2); color: var(--text); border: 1px solid var(--border); }
+
+.preview-frame {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: #fff;
+  min-height: 180px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .2s;
+}
+.preview-frame img { width: 100%; height: auto; display: block; }
+.preview-frame.mobile-frame { max-width: 375px; margin: 0 auto; border-radius: 20px; }
+
+/* code section */
+.code-section-label {
+  font-size: 11px; font-weight: 500; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--text3);
+  margin-bottom: 10px;
+}
+.code-block {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  font-family: var(--mono); font-size: 12px; line-height: 1.8;
+  color: #C9C3F0;
+  overflow-x: auto;
+  white-space: pre;
+  position: relative;
+}
+.code-block .kw  { color: #7EB3FA; }
+.code-block .str { color: #7EC99C; }
+.code-block .cm  { color: #5E5A72; font-style: italic; }
+
+.copy-btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 8px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg3);
+  color: var(--text2);
+  font-family: var(--sans); font-size: 13px;
+  cursor: pointer;
+  transition: all .15s;
+}
+.copy-btn:hover { border-color: var(--border2); color: var(--text); }
+.copy-btn.done  { border-color: rgba(61,214,140,.3); background: var(--green-bg); color: var(--green); }
+
+/* steps */
+.steps-list { display: flex; flex-direction: column; gap: 14px; }
+.step-item  { display: flex; gap: 14px; align-items: flex-start; }
+.step-num   {
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--accent-bg); border: 1px solid rgba(46,124,246,0.25);
+  color: var(--accent2); font-size: 11px; font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px;
+}
+.step-item p    { font-size: 13px; color: var(--text); line-height: 1.65; }
+.step-item code {
+  font-family: var(--mono); font-size: 11px;
+  background: var(--bg3); border: 1px solid var(--border);
+  color: var(--accent2);
+  padding: 1px 6px; border-radius: 4px;
+}
+.step-title { font-weight: 500; }
+
+/* ── RESPONSIVE ──────────────────────────────────────── */
+@media (max-width: 600px) {
+  .hero h1 { font-size: 26px; }
+  .hero-stats { gap: 16px; }
+  .codes-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+  .modal-body { padding: 18px; }
+  .modal-header { padding: 18px 18px 14px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ──────────── LOCK SCREEN ──────────────────────────── -->
+<div id="lock-screen">
+  <div class="lock-card">
+    <div class="lock-logo">🔐</div>
+    <h1>Acceso exclusivo</h1>
+    <p>Ingresa la contraseña que recibiste con tu compra para desbloquear los 100 códigos Liquid.</p>
+    <div class="lock-input-wrap">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      <input type="password" id="pw-input" placeholder="Tu contraseña" autocomplete="off" />
+    </div>
+    <p id="pw-error">Contraseña incorrecta. Inténtalo de nuevo.</p>
+    <button id="unlock-btn" onclick="checkPassword()">Desbloquear →</button>
+  </div>
+</div>
+
+<!-- ──────────── APP ────────────────────────────────────── -->
+<div id="app">
+
+  <!-- Header -->
+  <header>
+    <div class="header-inner">
+      <div class="header-logo">
+        <div class="logo-dot">⚡</div>
+        Shopify CRO Pack
+      </div>
+      <span class="header-badge">100 snippets Liquid</span>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-eyebrow"><span></span> Biblioteca de snippets Liquid</div>
+    <h1>Aumenta tu conversión<br>con <em>código listo</em> para usar</h1>
+    <p>Cada snippet está probado, documentado y listo para pegarse en tu tema de Shopify. Sin plugins, sin costos extra.</p>
+    <div class="hero-stats">
+      <div class="stat"><strong id="total-count">—</strong><span>snippets incluidos</span></div>
+      <div class="stat"><strong>5 min</strong><span>para implementar cada uno</span></div>
+      <div class="stat"><strong>100%</strong><span>Liquid nativo</span></div>
+    </div>
+  </section>
+
+  <!-- Search -->
+  <div class="search-wrap">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="search-input" placeholder="Buscar snippet..." oninput="applyFilters()">
+  </div>
+
+  <!-- Filters -->
+  <div class="filters-wrap" style="margin-top:20px">
+    <div class="filter-row" id="filter-row">
+      <button class="f-btn active" data-cat="todos" onclick="setFilter('todos',this)">
+        Todos <span class="count" id="count-todos">0</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Grid -->
+  <div class="grid-wrap">
+    <div id="loading-state" class="state-box visible">
+      <div class="spinner"></div>
+      <h3>Cargando snippets...</h3>
+      <p>Conectando con la base de datos</p>
+    </div>
+    <div id="empty-state" class="state-box">
+      <div class="state-icon">🔍</div>
+      <h3>Sin resultados</h3>
+      <p>Intenta con otro término o categoría</p>
+    </div>
+    <div id="error-state" class="state-box">
+      <div class="state-icon">⚠️</div>
+      <h3>No se pudieron cargar los snippets</h3>
+      <p id="error-msg">Verifica tu conexión o el token de Notion.</p>
+    </div>
+    <div class="codes-grid" id="codes-grid"></div>
+  </div>
+</div>
+
+<!-- ──────────── MODAL ──────────────────────────────────── -->
+<div class="modal-overlay" id="modal" onclick="onOverlayClick(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <h2 id="m-title">—</h2>
+        <p id="m-desc">—</p>
+      </div>
+      <button class="close-btn" onclick="closeModal()" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <!-- Device tabs -->
+      <div>
+        <div class="device-tabs">
+          <button class="dev-btn active" id="tab-mobile" onclick="switchDevice('mobile')">📱 Móvil</button>
+          <button class="dev-btn" id="tab-desktop" onclick="switchDevice('desktop')">🖥 Escritorio</button>
+        </div>
+      </div>
+
+      <!-- Preview -->
+      <div class="preview-frame mobile-frame" id="preview-frame">
+        <img id="preview-img" src="" alt="Vista previa" style="display:none">
+        <div id="preview-placeholder" style="padding:40px;text-align:center;color:#666;font-size:13px">Sin imagen de vista previa</div>
+      </div>
+
+      <!-- Code -->
+      <div>
+        <p class="code-section-label">Código Liquid</p>
+        <div class="code-block" id="m-code"></div>
+        <button class="copy-btn" id="copy-btn" onclick="copyCode()" style="margin-top:10px">
+          📋 Copiar código
+        </button>
+      </div>
+
+      <!-- Steps -->
+      <div>
+        <p class="code-section-label">Cómo implementarlo</p>
+        <div class="steps-list" id="m-steps"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ──────────── SCRIPT ─────────────────────────────────── -->
+<script>
+/* ═══════════════════════════════════════════════════════
+   ⚙️  CONFIGURACIÓN — edita estos valores
+═══════════════════════════════════════════════════════ */
+const CONFIG = {
+  authEndpoint:   "/.netlify/functions/auth",
+  notionEndpoint: "/.netlify/functions/notion",
+};
+
+/* ═══════════════════════════════════════════════════════
+   🔐  CONTRASEÑA
+═══════════════════════════════════════════════════════ */
+async function checkPassword() {
+  const val = document.getElementById("pw-input").value.trim();
+  const err = document.getElementById("pw-error");
+  const btn = document.getElementById("unlock-btn");
+  if (!val) return;
+  btn.textContent = "Verificando...";
+  btn.disabled = true;
+  try {
+    const res  = await fetch(CONFIG.authEndpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ password: val })
+    });
+    const data = await res.json();
+    if (data.ok) {
+      sessionStorage.setItem("cro_auth","1");
+      document.getElementById("lock-screen").classList.add("hidden");
+      document.getElementById("app").classList.add("visible");
+      fetchCodes();
+      setTimeout(()=>{ document.getElementById("lock-screen").style.display="none"; },450);
+    } else {
+      err.style.display = "block";
+      document.getElementById("pw-input").style.borderColor = "var(--pink)";
+      setTimeout(()=>{ document.getElementById("pw-input").style.borderColor=""; },1500);
+    }
+  } catch(e) {
+    err.textContent = "Error de conexión. Intenta de nuevo.";
+    err.style.display = "block";
+  } finally {
+    btn.textContent = "Desbloquear →";
+    btn.disabled = false;
+  }
+}
+document.getElementById("pw-input").addEventListener("keydown", e => { if(e.key==="Enter") checkPassword(); });
+if (sessionStorage.getItem("cro_auth")==="1") {
+  document.getElementById("lock-screen").style.display="none";
+  document.getElementById("app").classList.add("visible");
+  fetchCodes();
+}
+
+/* ═══════════════════════════════════════════════════════
+   📦  DATOS
+═══════════════════════════════════════════════════════ */
+let allCodes   = [];
+let activeFilter = "todos";
+let currentCode  = "";
+let currentItem  = null;
+let currentDevice = "mobile";
+
+async function fetchCodes() {
+  showState("loading");
+  try {
+    const res = await fetch(CONFIG.notionEndpoint, { method: "POST" });
+    if (!res.ok) throw new Error(`Error ${res.status} al conectar con Notion`);
+    const data = await res.json();
+    allCodes = data.results.map(parseNotionPage).filter(Boolean);
+    buildFilters();
+    renderGrid(allCodes);
+    document.getElementById("total-count").textContent = allCodes.length;
+    showState("none");
+  } catch(e) {
+    document.getElementById("error-msg").textContent = e.message;
+    showState("error");
+  }
+}
+
+function parseNotionPage(page) {
+  try {
+    const p = page.properties;
+    return {
+      id:          page.id,
+      title:       textOf(p.Titulo || p.Name || p.title),
+      desc:        textOf(p.Descripcion || p.Descripción || p.Description),
+      category:    selectOf(p.Categoria || p.Categoría || p.Category),
+      badge:       selectOf(p.Badge || p.Etiqueta),
+      code:        textOf(p.Codigo || p.Código || p.Code),
+      steps:       textOf(p.Instrucciones || p.Steps || p.Pasos),
+      thumbUrl:    fileOf(p.Portada || p.Thumbnail || p.Imagen),
+      mobileUrl:   fileOf(p.VistaMovil || p["Vista Móvil"] || p.Mobile),
+      desktopUrl:  fileOf(p.VistaEscritorio || p["Vista Escritorio"] || p.Desktop),
+    };
+  } catch(e) { return null; }
+}
+
+function textOf(prop) {
+  if (!prop) return "";
+  if (prop.type==="title")   return prop.title?.map(t=>t.plain_text).join("")||"";
+  if (prop.type==="rich_text") return prop.rich_text?.map(t=>t.plain_text).join("")||"";
+  return "";
+}
+function selectOf(prop) {
+  if (!prop) return "";
+  return prop.select?.name || "";
+}
+function fileOf(prop) {
+  if (!prop) return "";
+  const files = prop.files;
+  if (!files || !files.length) return "";
+  const f = files[0];
+  return f.type==="external" ? f.external?.url : f.file?.url || "";
+}
+
+/* ═══════════════════════════════════════════════════════
+   🎛  FILTROS Y BÚSQUEDA
+═══════════════════════════════════════════════════════ */
+function buildFilters() {
+  const cats = [...new Set(allCodes.map(c=>c.category).filter(Boolean))];
+  const row  = document.getElementById("filter-row");
+  document.getElementById("count-todos").textContent = allCodes.length;
+
+  cats.forEach(cat => {
+    const count = allCodes.filter(c=>c.category===cat).length;
+    const btn = document.createElement("button");
+    btn.className = "f-btn";
+    btn.dataset.cat = cat;
+    btn.innerHTML = `${cat} <span class="count">${count}</span>`;
+    btn.onclick = () => setFilter(cat, btn);
+    row.appendChild(btn);
+  });
+}
+
+function setFilter(cat, btn) {
+  activeFilter = cat;
+  document.querySelectorAll(".f-btn").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  applyFilters();
+}
+
+function applyFilters() {
+  const q = document.getElementById("search-input").value.toLowerCase();
+  let filtered = activeFilter==="todos" ? allCodes : allCodes.filter(c=>c.category===activeFilter);
+  if (q) filtered = filtered.filter(c=> c.title.toLowerCase().includes(q) || c.desc.toLowerCase().includes(q));
+  renderGrid(filtered);
+}
+
+/* ═══════════════════════════════════════════════════════
+   🃏  RENDER
+═══════════════════════════════════════════════════════ */
+const EMOJIS = { "Urgencia":"⏳", "Prueba social":"👥", "Carrito":"🛒", "Producto":"📦", "Navegación":"🧭", "Checkout":"💳" };
+
+function renderGrid(items) {
+  const grid = document.getElementById("codes-grid");
+  const empty = document.getElementById("empty-state");
+  if (!items.length) { grid.innerHTML=""; empty.classList.add("visible"); return; }
+  empty.classList.remove("visible");
+
+  grid.innerHTML = items.map(c => {
+    const emoji = EMOJIS[c.category] || "⚡";
+    const thumb = c.thumbUrl
+      ? `<img src="${c.thumbUrl}" alt="${c.title}" loading="lazy">`
+      : `<div class="card-thumb-placeholder">${emoji}</div>`;
+
+    const chipClass = {popular:"chip-popular", nuevo:"chip-nuevo", avanzado:"chip-avanzado"}[c.badge?.toLowerCase()] || "";
+    const chip = c.badge && chipClass ? `<span class="card-chip ${chipClass}">${c.badge}</span>` : "";
+
+    return `
+    <div class="code-card" onclick="openModal('${c.id}')" tabindex="0"
+         role="button" aria-label="Ver ${c.title}"
+         onkeydown="if(event.key==='Enter')openModal('${c.id}')">
+      <div class="card-thumb">${thumb}${chip}</div>
+      <div class="card-body">
+        <h3>${c.title}</h3>
+        <p>${c.desc}</p>
+        <div class="card-footer">
+          <span class="card-tag">${c.category || "General"}</span>
+          <span class="card-arrow">→</span>
+        </div>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+/* ═══════════════════════════════════════════════════════
+   📋  MODAL
+═══════════════════════════════════════════════════════ */
+function openModal(id) {
+  const item = allCodes.find(c=>c.id===id);
+  if (!item) return;
+  currentItem = item;
+  currentCode = item.code;
+  currentDevice = "mobile";
+
+  document.getElementById("m-title").textContent = item.title;
+  document.getElementById("m-desc").textContent  = item.desc;
+  document.getElementById("m-code").textContent  = item.code;
+
+  resetCopyBtn();
+  switchDevice("mobile");
+
+  const stepsRaw = (item.steps||"").split("\n").filter(l=>l.trim());
+  const stepsHtml = stepsRaw.map((line, i) => {
+    const clean = line.replace(/^\d+[\.\-\)]\s*/, "");
+    return `<div class="step-item">
+      <div class="step-num">${i+1}</div>
+      <p>${clean}</p>
+    </div>`;
+  }).join("") || `<div class="step-item"><div class="step-num">1</div><p>Sin instrucciones adicionales.</p></div>`;
+  document.getElementById("m-steps").innerHTML = stepsHtml;
+
+  document.getElementById("modal").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function switchDevice(device) {
+  currentDevice = device;
+  const frame = document.getElementById("preview-frame");
+  const img   = document.getElementById("preview-img");
+  const ph    = document.getElementById("preview-placeholder");
+  const url   = device==="mobile" ? currentItem?.mobileUrl : currentItem?.desktopUrl;
+
+  document.getElementById("tab-mobile").classList.toggle("active", device==="mobile");
+  document.getElementById("tab-desktop").classList.toggle("active", device==="desktop");
+  frame.classList.toggle("mobile-frame", device==="mobile");
+
+  if (url) { img.src=url; img.style.display="block"; ph.style.display="none"; }
+  else      { img.style.display="none"; ph.style.display="block"; }
+}
+
+function closeModal() {
+  document.getElementById("modal").classList.remove("open");
+  document.body.style.overflow = "";
+}
+function onOverlayClick(e) { if(e.target===document.getElementById("modal")) closeModal(); }
+document.addEventListener("keydown", e=>{ if(e.key==="Escape") closeModal(); });
+
+function copyCode() {
+  navigator.clipboard.writeText(currentCode).then(()=>{
+    const btn = document.getElementById("copy-btn");
+    btn.textContent = "✅ ¡Copiado!";
+    btn.classList.add("done");
+    setTimeout(resetCopyBtn, 2000);
+  });
+}
+function resetCopyBtn() {
+  const btn = document.getElementById("copy-btn");
+  btn.textContent = "📋 Copiar código";
+  btn.classList.remove("done");
+}
+
+/* ═══════════════════════════════════════════════════════
+   🛠  UTILIDADES
+═══════════════════════════════════════════════════════ */
+function showState(state) {
+  document.getElementById("loading-state").classList.toggle("visible", state==="loading");
+  document.getElementById("error-state").classList.toggle("visible",   state==="error");
+  if (state!=="loading") document.getElementById("loading-state").classList.remove("visible");
+}
+</script>
+</body>
+</html>
