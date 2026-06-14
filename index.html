@@ -440,18 +440,35 @@ header {
 .code-block .cm  { color: #5E5A72; font-style: italic; }
 
 .copy-btn {
-  display: inline-flex; align-items: center; gap: 7px;
-  padding: 8px 16px;
-  border: 1px solid var(--border);
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  width: 100%; padding: 11px 16px;
+  border: none;
   border-radius: var(--radius);
-  background: var(--bg3);
-  color: var(--text2);
-  font-family: var(--sans); font-size: 13px;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--sans); font-size: 14px; font-weight: 500;
   cursor: pointer;
   transition: all .15s;
 }
-.copy-btn:hover { border-color: var(--border2); color: var(--text); }
-.copy-btn.done  { border-color: rgba(61,214,140,.3); background: var(--green-bg); color: var(--green); }
+.copy-btn:hover { opacity: .88; }
+.copy-btn.done  { background: var(--green-bg); border: 1px solid rgba(61,214,140,.3); color: var(--green); }
+
+/* toggle code */
+.toggle-code-btn {
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%; padding: 10px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--text3);
+  font-family: var(--sans); font-size: 13px;
+  cursor: pointer; transition: all .15s;
+}
+.toggle-code-btn:hover { border-color: var(--border2); color: var(--text2); }
+.toggle-code-btn .arrow { transition: transform .2s; font-size: 11px; }
+.toggle-code-btn.open .arrow { transform: rotate(180deg); }
+.code-wrap { display: none; margin-top: 10px; }
+.code-wrap.open { display: block; }
 
 /* steps */
 .steps-list { display: flex; flex-direction: column; gap: 14px; }
@@ -587,20 +604,28 @@ header {
         <div id="preview-placeholder" style="padding:40px;text-align:center;color:#666;font-size:13px">Sin imagen de vista previa</div>
       </div>
 
-      <!-- Code -->
-      <div>
-        <p class="code-section-label">Código Liquid</p>
-        <div class="code-block" id="m-code"></div>
-        <button class="copy-btn" id="copy-btn" onclick="copyCode()" style="margin-top:10px">
-          📋 Copiar código
-        </button>
-      </div>
+      <!-- Copiar código — inmediato -->
+      <button class="copy-btn" id="copy-btn" onclick="copyCode()">
+        📋 Copiar código
+      </button>
 
       <!-- Steps -->
       <div>
         <p class="code-section-label">Cómo implementarlo</p>
         <div class="steps-list" id="m-steps"></div>
       </div>
+
+      <!-- Código colapsado al fondo -->
+      <div>
+        <button class="toggle-code-btn" id="toggle-code-btn" onclick="toggleCode()">
+          <span id="toggle-label">Ver código Liquid</span>
+          <span class="arrow">▼</span>
+        </button>
+        <div class="code-wrap" id="code-wrap">
+          <div class="code-block" id="m-code"></div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -805,6 +830,11 @@ function openModal(id) {
   document.getElementById("m-code").textContent  = item.code;
 
   resetCopyBtn();
+  // Resetear código colapsado
+  document.getElementById("code-wrap").classList.remove("open");
+  const toggleBtn = document.getElementById("toggle-code-btn");
+  toggleBtn.classList.remove("open");
+  document.getElementById("toggle-label").textContent = "Ver código Liquid";
   switchDevice("mobile");
 
   const stepsRaw = (item.steps||"").split("\n").filter(l=>l.trim());
@@ -842,6 +872,14 @@ function closeModal() {
 }
 function onOverlayClick(e) { if(e.target===document.getElementById("modal")) closeModal(); }
 document.addEventListener("keydown", e=>{ if(e.key==="Escape") closeModal(); });
+
+function toggleCode() {
+  const wrap = document.getElementById("code-wrap");
+  const btn  = document.getElementById("toggle-code-btn");
+  const isOpen = wrap.classList.toggle("open");
+  btn.classList.toggle("open", isOpen);
+  document.getElementById("toggle-label").textContent = isOpen ? "Ocultar código Liquid" : "Ver código Liquid";
+}
 
 function copyCode() {
   navigator.clipboard.writeText(currentCode).then(()=>{
